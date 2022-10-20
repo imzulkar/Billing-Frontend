@@ -78,7 +78,7 @@ export default function Signin() {
         console.log(value);
         localStorage.setItem('accessToken', response['access']);
         // localStorage.setItem('user', JSON.stringify(response['user']));
-        // window.location.href = "/profile";
+        window.location.href = "/profile";
       });
     } else {
         Swal.fire({

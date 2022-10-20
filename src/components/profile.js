@@ -56,6 +56,7 @@ export default function Profile() {
             <div>
             <IconButton onClick={handleMenu} color="inherit">
               {/* <Avatar src={user.avatar} /> */}
+              lll
             </IconButton>
             <Menu id="menu-appbar" 
               anchorEl={anchorEl} 

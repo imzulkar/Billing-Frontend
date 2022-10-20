@@ -10,7 +10,8 @@ function App() {
   }
   if(token && path ==='/'){
     // console.log(window.history);
-    return window.history.back()
+    return window.location.href = '/profile'
+    // window.history.back()
   }
   const Test1 = () => {
     return <>
