@@ -1,36 +1,30 @@
-import { BrowserRouter, Route, Routes} from 'react-router-dom';
+import React, { Component }  from 'react';
+import { BrowserRouter, Route, Routes,useNavigate} from 'react-router-dom';
 import Signin from './components/authentication/login';
+import Dashboard from './components/billing/dashboard';
 import Profile from './components/profile';
 
 function App() {
   const token = localStorage.getItem('accessToken');
   const path = window.location.pathname
+  
   if(!token) {
-    return <Signin />
+    return <Signin/>
   }
   if(token && path ==='/'){
     // console.log(window.history);
-    return window.location.href = '/profile'
+    return window.location.href = '/dashboard'
     // window.history.back()
   }
-  const Test1 = () => {
-    return <>
-    <p>Test 1 </p>
-    </>
-  }
-  const Test2 = () => {
-    return <>
-    <p>Test 2 </p>
-    </>
-  }
+
   return (
     <div className="wrapper">
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={<Signin/>}/>
-          <Route path='/profile' element={<Profile/>}/>
-          <Route path='/t1' element={<Test1/>}/>
-          <Route path='/t2' element={<Test2/>}/>
+          <Route exact path='/dashboard' element={<Dashboard/>}/>
+          <Route exact path='/login' element={<Signin/>}/>
+          <Route exact path='/profile' element={<Profile/>}/>
+          
         </Routes>
       </BrowserRouter>
     </div>
