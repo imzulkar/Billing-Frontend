@@ -96,11 +96,11 @@ const BillingForm = () => {
                           textAlign: "center",
                         }}
                       >
-                        Customer Name
+                        Customer Addresss
                       </span>
                       <textarea
-                        className="textarea textarea-bordered"
-                        placeholder="Bio"
+                        className="textarea textarea-bordered text-[16px]"
+                        placeholder="Customer Address"
                         style={{
                           width: "75%",
                         }}

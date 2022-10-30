@@ -40,7 +40,7 @@ const AddRemoveInputField = () => {
                 <span>Description</span>
                 <input
                   type="text"
-                  placeholder="Total"
+                  placeholder="Description Of the service"
                   className="input input-bordered"
                   onChange={(evnt) => handleChange(index, evnt)}
                   value={element.description || ""}
@@ -53,8 +53,8 @@ const AddRemoveInputField = () => {
               <label className="input-group input-group-vertical">
                 <span>Price</span>
                 <input
-                  type="text"
-                  placeholder="price"
+                  type="number"
+                  placeholder="Price"
                   className="input input-bordered"
                   onChange={(evnt) => handleChange(index, evnt)}
                   value={element.price || ""}
@@ -66,7 +66,7 @@ const AddRemoveInputField = () => {
               <label className="input-group input-group-vertical">
                 <span>Additional Price</span>
                 <input
-                  type="text"
+                  type="number"
                   placeholder="Additional Price"
                   className="input input-bordered"
                   onChange={(evnt) => handleChange(index, evnt)}
@@ -79,7 +79,7 @@ const AddRemoveInputField = () => {
               <label className="input-group input-group-vertical">
                 <span>Total</span>
                 <input
-                  type="text"
+                  type="number"
                   placeholder="Total"
                   className="input input-bordered"
                   onChange={(evnt) => handleChange(index, evnt)}
