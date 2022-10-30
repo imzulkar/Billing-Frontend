@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 // import "./styles.css";
 
-const AddRemoveInputField = () => {
+const AddRemoveInputFieldTwo = () => {
   const [formValues, setFormValues] = useState([
     { description: "", price: "", additionalPrice: "", totalPrice: "" },
   ]);
@@ -58,7 +58,7 @@ const AddRemoveInputField = () => {
                   className="input input-bordered"
                   onChange={(evnt) => handleChange(index, evnt)}
                   value={element.price || ""}
-                  name="price"
+                  name="description"
                 />
               </label>
             </div>
@@ -71,7 +71,7 @@ const AddRemoveInputField = () => {
                   className="input input-bordered"
                   onChange={(evnt) => handleChange(index, evnt)}
                   value={element.additionalPrice || ""}
-                  name="additionalPrice"
+                  name="description"
                 />
               </label>
             </div>
@@ -84,24 +84,16 @@ const AddRemoveInputField = () => {
                   className="input input-bordered"
                   onChange={(evnt) => handleChange(index, evnt)}
                   value={element.totalPrice || ""}
-                  name="totalPrice"
+                  name="description"
                 />
               </label>
             </div>
 
             {index ? (
               <div className="w-max h-max m-auto">
-                {/* <button
+                <button
                   type="button"
                   className="btn btn-danger "
-                  onClick={() => removeFormFields(index)}
-                >
-                  Remove
-                </button> */}
-
-                <button
-                  class="btn btn-outline btn-error"
-                  type="button"
                   onClick={() => removeFormFields(index)}
                 >
                   Remove
@@ -113,22 +105,15 @@ const AddRemoveInputField = () => {
       ))}
       <div className="button-section">
         <button
-          class="btn btn-outline btn-primary"
-          type="button"
-          onClick={() => addFormFields()}
-        >
-          Add New
-        </button>
-        {/* <button
           className="btn btn-primary"
           type="button"
           onClick={() => addFormFields()}
         >
           Add New
-        </button> */}
+        </button>
       </div>
     </form>
   );
 };
 
-export default AddRemoveInputField;
+export default AddRemoveInputFieldTwo;

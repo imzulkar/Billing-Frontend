@@ -1,5 +1,5 @@
 import { useState } from "react";
-import AddRemoveInputField from "./test";
+import AddRemoveInputField from "./billingItem";
 
 const BillingForm = () => {
   const [date, setDate] = useState();
@@ -15,8 +15,9 @@ const BillingForm = () => {
     return date;
   };
 
-  const HandelBill = () => {
-    console.log("hi");
+  const HandelBill = (event) => {
+    event.preventDefault();
+    alert(JSON.stringify(this.state.formValues));
   };
   return (
     <>
@@ -295,6 +296,7 @@ const BillingForm = () => {
             </div>
 
             <div>
+              {/* <AddRemoveInputField /> */}
               <AddRemoveInputField />
             </div>
           </form>
