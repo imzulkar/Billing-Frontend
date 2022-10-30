@@ -1,8 +1,24 @@
 import { useState } from "react";
-import AddRemoveInputField from "./billingItem";
 
 const BillingForm = () => {
-  const [date, setDate] = useState();
+  //form data subission
+  const [customerName, setCustomerName] = useState("");
+  const [customerAddress, setCustomerAddress] = useState("");
+  const [customer, setCustomer] = useState("");
+  const [projectName, setProjectName] = useState("");
+  const [paymentPhase, setPaymentPhase] = useState("");
+  const [paymentType, setPaymentType] = useState("");
+  const [accountName, setAccountName] = useState("");
+  const [accountNo, setAccountNo] = useState("");
+  const [chequeNo, setChequeNo] = useState("");
+  const [bankDetails, setBankDetails] = useState("");
+  const [routeingNo, setRouteingNo] = useState("");
+  const [serviceDes, setServiceDes] = useState("");
+  const [servicePrice, setServicePrice] = useState("");
+  const [additionalExpense, setAdditionalExpense] = useState("");
+  const [totalExpense, setTotalExpense] = useState("");
+
+  const [invDate, setInvDate] = useState();
 
   const getDate = () => {
     var today = new Date();
@@ -10,14 +26,36 @@ const BillingForm = () => {
     let month = today.getMonth();
     let day = today.getDate();
     let date = `${year}-${month + 1}-${day}`;
-    console.log(date);
-    setDate(date);
     return date;
   };
 
   const HandelBill = (event) => {
     event.preventDefault();
     alert(JSON.stringify(this.state.formValues));
+  };
+
+  const [formValues, setFormValues] = useState([
+    { description: "", price: "", additionalPrice: "", totalPrice: "" },
+  ]);
+
+  let handleChange = (i, e) => {
+    let newFormValues = [...formValues];
+    newFormValues[i][e.target.name] = e.target.value;
+    setFormValues(newFormValues);
+    console.log(formValues);
+  };
+
+  let addFormFields = () => {
+    setFormValues([
+      ...formValues,
+      { description: "", price: "", additionalPrice: "", totalPrice: "" },
+    ]);
+  };
+
+  let removeFormFields = (i) => {
+    let newFormValues = [...formValues];
+    newFormValues.splice(i, 1);
+    setFormValues(newFormValues);
   };
   return (
     <>
@@ -48,15 +86,14 @@ const BillingForm = () => {
                       </span>
                       <input
                         type="date"
-                        defaultValue={date}
+                        defaultValue={invDate}
                         onClick={(e) => {
                           if (e.target.value === "") {
                             e.target.value = getDate();
                           }
                         }}
                         onChange={(e) => {
-                          setDate(e.target.value);
-                          console.log(date);
+                          setInvDate(e.target.value);
                         }}
                         className="input input-bordered"
                         style={{
@@ -81,6 +118,7 @@ const BillingForm = () => {
                         type="text"
                         placeholder="Customer Name"
                         className="input input-bordered"
+                        onChange={(e) => setCustomerName(e.target.value)}
                         style={{
                           width: "75%",
                         }}
@@ -101,6 +139,7 @@ const BillingForm = () => {
                       <textarea
                         className="textarea textarea-bordered text-[16px]"
                         placeholder="Customer Address"
+                        onChange={(e) => setCustomerAddress(e.target.value)}
                         style={{
                           width: "75%",
                         }}
@@ -123,6 +162,7 @@ const BillingForm = () => {
                         type="text"
                         placeholder="Project Name"
                         className="input input-bordered"
+                        onChange={(e) => setProjectName(e.target.value)}
                         style={{
                           width: "75%",
                         }}
@@ -139,12 +179,13 @@ const BillingForm = () => {
                           textAlign: "center",
                         }}
                       >
-                        Project Phase
+                        Payment Phase
                       </span>
                       <input
                         type="text"
-                        placeholder="Project Phase"
+                        placeholder="Payment Phase"
                         className="input input-bordered"
+                        onChange={(e) => setPaymentPhase(e.target.value)}
                         style={{
                           width: "75%",
                         }}
@@ -168,6 +209,9 @@ const BillingForm = () => {
                       </span>
                       <select
                         className="select select-bordered"
+                        onChange={(e) => {
+                          setPaymentType(e.target.value);
+                        }}
                         style={{
                           width: "75%",
                         }}
@@ -175,9 +219,9 @@ const BillingForm = () => {
                         <option disabled selected>
                           Payment Type
                         </option>
-                        <option>Cash</option>
-                        <option>Cheque</option>
-                        <option>Bank</option>
+                        <option value={"cash"}>Cash</option>
+                        <option value={"cheque"}>Cheque</option>
+                        <option value={"bank"}>Bank</option>
                       </select>
                     </label>
                   </div>
@@ -197,6 +241,7 @@ const BillingForm = () => {
                         type="text"
                         placeholder="Account Name"
                         className="input input-bordered"
+                        onChange={(e) => setAccountName(e.target.value)}
                         style={{
                           width: "75%",
                         }}
@@ -218,6 +263,7 @@ const BillingForm = () => {
                         type="text"
                         placeholder="Account Number"
                         className="input input-bordered"
+                        onChange={(e) => setAccountNo(e.target.value)}
                         style={{
                           width: "75%",
                         }}
@@ -234,12 +280,13 @@ const BillingForm = () => {
                           textAlign: "center",
                         }}
                       >
-                        Check Number
+                        Cheque Number
                       </span>
                       <input
                         type="text"
                         placeholder="Cheque Number"
                         className="input input-bordered"
+                        onChange={(e) => setChequeNo(e.target.value)}
                         style={{
                           width: "75%",
                         }}
@@ -263,6 +310,7 @@ const BillingForm = () => {
                         type="text"
                         placeholder=" Bank Details"
                         className="input input-bordered"
+                        onChange={(e) => setBankDetails(e.target.value)}
                         style={{
                           width: "75%",
                         }}
@@ -278,13 +326,13 @@ const BillingForm = () => {
                           textAlign: "center",
                         }}
                       >
-                        {" "}
                         Routing Number
                       </span>
                       <input
                         type="text"
                         placeholder=" Routing Number"
                         className="input input-bordered"
+                        onChange={(e) => setRouteingNo(e.target.value)}
                         style={{
                           width: "75%",
                         }}
@@ -297,7 +345,102 @@ const BillingForm = () => {
 
             <div>
               {/* <AddRemoveInputField /> */}
-              <AddRemoveInputField />
+              {/* <AddRemoveInputField /> */}
+              {formValues.map((element, index) => (
+                <div className="form-inline" key={index}>
+                  <div className="grid grid-cols-12 gap-3 my-2">
+                    <div className="form-control col-span-5">
+                      <label className="input-group input-group-vertical">
+                        <span>Description</span>
+                        <input
+                          type="text"
+                          placeholder="Description Of the service"
+                          className="input input-bordered"
+                          onChange={(evnt) => handleChange(index, evnt)}
+                          value={element.description || ""}
+                          name="description"
+                        />
+                      </label>
+                    </div>
+
+                    <div className="form-control col-span-2">
+                      <label className="input-group input-group-vertical">
+                        <span>Price</span>
+                        <input
+                          type="number"
+                          placeholder="Price"
+                          className="input input-bordered"
+                          onChange={(evnt) => handleChange(index, evnt)}
+                          value={element.price || ""}
+                          name="price"
+                        />
+                      </label>
+                    </div>
+                    <div className="form-control col-span-2">
+                      <label className="input-group input-group-vertical">
+                        <span>Additional Price</span>
+                        <input
+                          type="number"
+                          placeholder="Additional Price"
+                          className="input input-bordered"
+                          onChange={(evnt) => handleChange(index, evnt)}
+                          value={element.additionalPrice || ""}
+                          name="additionalPrice"
+                        />
+                      </label>
+                    </div>
+                    <div className="form-control col-span-2">
+                      <label className="input-group input-group-vertical">
+                        <span>Total</span>
+                        <input
+                          type="number"
+                          placeholder="Total"
+                          className="input input-bordered"
+                          onChange={(evnt) => handleChange(index, evnt)}
+                          value={element.totalPrice || ""}
+                          name="totalPrice"
+                        />
+                      </label>
+                    </div>
+
+                    {index ? (
+                      <div className="w-max h-max m-auto">
+                        {/* <button
+                  type="button"
+                  className="btn btn-danger "
+                  onClick={() => removeFormFields(index)}
+                >
+                  Remove
+                </button> */}
+
+                        <button
+                          class="btn btn-outline btn-error"
+                          type="button"
+                          onClick={() => removeFormFields(index)}
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    ) : null}
+                  </div>
+                </div>
+              ))}
+              <div className="button-section">
+                <button
+                  class="btn btn-outline btn-primary"
+                  type="button"
+                  onClick={() => addFormFields()}
+                >
+                  Add New
+                </button>
+                {/* <button
+          className="btn btn-primary"
+          type="button"
+          onClick={() => addFormFields()}
+        >
+          Add New
+        </button> */}
+              </div>
             </div>
           </form>
         </div>

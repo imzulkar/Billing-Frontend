@@ -2,8 +2,6 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Signin from "./components/authentication/login";
 import Dashboard from "./components/billing/dashboard";
-import AddRemoveInputField from "./components/billing/test";
-import AddRemoveInputFieldTwo from "./components/billing/test2";
 import Profile from "./components/profile";
 function App() {
   const token = localStorage.getItem("accessToken");
@@ -25,8 +23,6 @@ function App() {
           <Route exact path="/dashboard" element={<Dashboard />} />
           <Route exact path="/login" element={<Signin />} />
           <Route exact path="/profile" element={<Profile />} />
-          <Route exact path="/test" element={<AddRemoveInputField />} />
-          <Route exact path="/test2" element={<AddRemoveInputFieldTwo />} />
         </Routes>
       </BrowserRouter>
     </div>
