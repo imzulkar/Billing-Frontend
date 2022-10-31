@@ -1,0 +1,7 @@
+body * {
+  display: none;
+}
+
+#printable-area {
+  display: block;
+}

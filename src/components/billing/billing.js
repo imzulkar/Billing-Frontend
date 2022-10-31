@@ -1,6 +1,6 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import myAxios from "../utils/axios";
+import myAxios from "../utils/myAxios";
 
 const BillingForm = () => {
   //form data subission
@@ -60,32 +60,32 @@ const BillingForm = () => {
     setFormValues(newFormValues);
   };
 
-  const onSubmit = () => {
+  const onSubmit = (event) => {
+    event.preventDefault();
     const payload = {
-      invoice_items: formValues,
+      invoices: formValues,
       cus_name: customerName,
       inv_date: invDate,
       cus_address: customerAddress,
-      total_amount: totalExpense,
       payment_type: paymentType,
-      account_name: totalExpense,
-      account_number: totalExpense,
-      check_number: totalExpense,
-      bank_details: totalExpense,
-      routing_number: totalExpense,
+      account_name: accountName,
+      account_number: accountNo,
+      check_number: chequeNo,
+      bank_details: bankDetails,
+      routing_number: routeingNo,
       project: "c588adb9-6e76-4aab-ac14-2b3c071b647d",
     };
     console.log(payload);
     // console.log(payload);
     myAxios
-      .post("bill/invoices", payload, {
+      .post("bill/invoices/", payload, {
         headers: {
-          "Content-Type": "multipart/form-data",
+          "Content-Type": "application/json",
         },
       })
       .then((res) => {
-        // console.log(res);
-        navigate("/invoices");
+        console.log(res);
+        navigate("/dashboard");
       })
       .catch((err) => {
         console.log(err.response.data);
@@ -102,7 +102,7 @@ const BillingForm = () => {
         </div>
 
         <div className="billing-form ">
-          <form onSubmit={() => onSubmit}>
+          <form onSubmit={onSubmit}>
             <div className="customer-info">
               <div className="flex flex-row justify-evenly  mx-auto">
                 <div className="w-[45%] ">
@@ -476,6 +476,10 @@ const BillingForm = () => {
           Add New
         </button> */}
               </div>
+            </div>
+
+            <div>
+              <button className="btn btn-primary">Submit</button>
             </div>
           </form>
         </div>
