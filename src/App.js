@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Signin from "./components/authentication/login";
+import BillingList from "./components/billing/billingList";
 import Dashboard from "./components/billing/dashboard";
 import Profile from "./components/profile";
 function App() {
@@ -23,6 +24,7 @@ function App() {
           <Route exact path="/dashboard" element={<Dashboard />} />
           <Route exact path="/login" element={<Signin />} />
           <Route exact path="/profile" element={<Profile />} />
+          <Route exact path="/test" element={<BillingList />} />
         </Routes>
       </BrowserRouter>
     </div>
