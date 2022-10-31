@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import myAxios from "../utils/axios";
 
 const BillingForm = () => {
   //form data subission
@@ -19,7 +21,7 @@ const BillingForm = () => {
   const [totalExpense, setTotalExpense] = useState("");
 
   const [invDate, setInvDate] = useState();
-
+  const navigate = useNavigate();
   const getDate = () => {
     var today = new Date();
     let year = today.getFullYear();
@@ -35,7 +37,7 @@ const BillingForm = () => {
   };
 
   const [formValues, setFormValues] = useState([
-    { description: "", price: "", additionalPrice: "", totalPrice: "" },
+    { description: "", price: "", additional_expense: "", total: "" },
   ]);
 
   let handleChange = (i, e) => {
@@ -48,7 +50,7 @@ const BillingForm = () => {
   let addFormFields = () => {
     setFormValues([
       ...formValues,
-      { description: "", price: "", additionalPrice: "", totalPrice: "" },
+      { description: "", price: "", additional_expense: "", total: "" },
     ]);
   };
 
@@ -57,6 +59,39 @@ const BillingForm = () => {
     newFormValues.splice(i, 1);
     setFormValues(newFormValues);
   };
+
+  const onSubmit = () => {
+    const payload = {
+      invoice_items: formValues,
+      cus_name: customerName,
+      inv_date: invDate,
+      cus_address: customerAddress,
+      total_amount: totalExpense,
+      payment_type: paymentType,
+      account_name: totalExpense,
+      account_number: totalExpense,
+      check_number: totalExpense,
+      bank_details: totalExpense,
+      routing_number: totalExpense,
+      project: "c588adb9-6e76-4aab-ac14-2b3c071b647d",
+    };
+    console.log(payload);
+    // console.log(payload);
+    myAxios
+      .post("bill/invoices", payload, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        // console.log(res);
+        navigate("/invoices");
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+      });
+  };
+
   return (
     <>
       <div className="m-3">
@@ -67,7 +102,7 @@ const BillingForm = () => {
         </div>
 
         <div className="billing-form ">
-          <form onSubmit={() => HandelBill}>
+          <form onSubmit={() => onSubmit}>
             <div className="customer-info">
               <div className="flex flex-row justify-evenly  mx-auto">
                 <div className="w-[45%] ">
@@ -384,8 +419,8 @@ const BillingForm = () => {
                           placeholder="Additional Price"
                           className="input input-bordered"
                           onChange={(evnt) => handleChange(index, evnt)}
-                          value={element.additionalPrice || ""}
-                          name="additionalPrice"
+                          value={element.additional_expense || ""}
+                          name="additional_expense"
                         />
                       </label>
                     </div>
@@ -397,8 +432,8 @@ const BillingForm = () => {
                           placeholder="Total"
                           className="input input-bordered"
                           onChange={(evnt) => handleChange(index, evnt)}
-                          value={element.totalPrice || ""}
-                          name="totalPrice"
+                          value={element.total || ""}
+                          name="total"
                         />
                       </label>
                     </div>
