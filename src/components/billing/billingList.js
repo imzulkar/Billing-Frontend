@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import logo from "../../resources/logo.png";
+import inWords from "../utils/helper";
 import myAxios from "../utils/myAxios";
 import SideNav from "./sideNav";
 
@@ -222,7 +223,7 @@ const BillingList = () => {
                 </table>
               </div>
             </div>
-            <div className="form-item-section min-h-[300px] my-4 mx-2">
+            <div className="form-item-section min-h-[200px] my-4 mx-2">
               <div className="overflow-x-auto">
                 <table className="table w-full">
                   <thead>
@@ -253,8 +254,82 @@ const BillingList = () => {
               </div>
             </div>
           </div>
+          <div className="flex ">
+            <div className="w-full">
+              <div className="overflow-x-auto">
+                <table className="table w-full">
+                  <thead>
+                    <tr>
+                      <th className="text-center bg-base-dark-color w-1/2">
+                        Notes
+                      </th>
+                      <th className="bg-gray-700 w-1/2"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td></td>
+                      <td>
+                        <table className="w-full">
+                          <tr>
+                            <th className="p-0 m-0">Sub Total</th>
+                            <td className="p-0 m-0">1200</td>
+                          </tr>
+                          <tr>
+                            <th className="p-0 m-0">Vat</th>
+                            <td className="p-0 m-0">10</td>
+                          </tr>
+                          <tr>
+                            <th className="p-0 m-0">Grand Total</th>
+                            <td className="p-0 m-0">{invoice.total_amount}</td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div>
+                <p>
+                  <strong>In Words: </strong>
+                  {inWords(invoice?.total_amount)}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="flex justify-between mt-14 text-center mx-10">
+            <div className="authorization1 w-max ">
+              <hr />
+              <p>Anik Tapader</p>
+              <p>Associate (Accounts)</p>
+            </div>
+            <div className="authorization2">
+              <hr />
+              <p>Md. Zakaria Hassan</p>
+              <p>Director (Finance)</p>
+            </div>
+          </div>
+
+          <div className="flex w-[764px] mt-5">
+            <div className="w-1/2">
+              <p>
+                <strong>Office Address:</strong>
+                1st Floor, Building No- 02, 15, New Baily Road, 05, Siddheswari
+                Circular Road (Present), Dhaka- 1217
+              </p>
+            </div>
+            <div className="w-1/2">
+              <p>
+                <strong>Contact Details:</strong>
+                Email: business@prc-bd.com
+              </p>
+            </div>
+          </div>
+
           <div className="flex justify-center my-4">
-            <button className="btn btn-warning">Print</button>
+            <button className="btn btn-warning" onClick={() => window.print()}>
+              Print
+            </button>
           </div>
         </div>
       </div>
