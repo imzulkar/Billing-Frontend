@@ -11,6 +11,8 @@ const BillingList = () => {
   const [data, setData] = useState([]);
   const [invoice, setInvoice] = useState();
   const [isSet, setIsSet] = useState(false);
+  const [isOpen, setisOpen] = useState(false);
+
   const getData = () => {
     myAxios
       .get("bill/invoices/")
@@ -44,6 +46,23 @@ const BillingList = () => {
     });
   }, [invId]);
 
+  useEffect(() => {
+    if (isOpen === true) {
+      let area = document.getElementById("remove-area");
+      area.classList.add("flex");
+      area.classList.remove("hidden");
+    } else {
+      let area = document.getElementById("remove-area");
+      area.classList.remove("flex");
+      area.classList.add("hidden");
+    }
+  }, [isOpen]);
+  window.onbeforeunload = () => {
+    let area = document.getElementById("remove-area");
+    area.classList.add("flex");
+    area.classList.remove("hidden");
+    // window.print();
+  };
   const PrintArea = () => {
     //console.log('print');
     let printContents = document.getElementById("printArea").innerHTML;
@@ -85,6 +104,7 @@ const BillingList = () => {
                             className="btn"
                             id="invoiceId"
                             onClick={(e) => {
+                              setisOpen(true);
                               setInvId(
                                 e.target.parentElement.getAttribute("data-id")
                               );
@@ -110,29 +130,32 @@ const BillingList = () => {
         <div className="modal-box max-w-none w-max bg-white relative rounded-xl">
           <label
             htmlFor="my-modal-3"
+            onClick={() => {
+              setisOpen(false);
+            }}
             className="btn btn-sm btn-circle absolute right-2 top-2"
           >
             ✕
           </label>
           <div className="w-[764px] border-b ">
             {/* All info */}
-            <div className="header-section flex">
+            <div className="header-section flex min-h-[150px] overflow-hidden">
               <div className="px-4 w-1/2 flex flex-col">
-                <img src={logo} alt="" />
+                <img src={logo} alt="" width={"200px"} height={"100px"} />
                 <div className="overflow-x-auto ">
                   <table className="table-fixed border">
                     <thead className="text-left ">
                       <tr>
-                        <th className="bg-base-dark-color text-white px-3 py-1">
+                        <th className="bg-base-dark-color text-white px-3 py-0">
                           Invoice No:
                         </th>
-                        <th className="px-2">{invoice?.inv_no}</th>
+                        <th className="px-2 ">{invoice?.inv_no}</th>
                       </tr>
                       <tr>
-                        <th className="bg-base-dark-color text-white  px-3 py-1">
+                        <th className="bg-base-dark-color text-white  px-3 py-0">
                           Date:
                         </th>
-                        <th className="px-2">{invoice?.inv_date}</th>
+                        <th className="px-2 py-0">{invoice?.inv_date}</th>
                       </tr>
                     </thead>
                   </table>
@@ -148,85 +171,85 @@ const BillingList = () => {
                 <table className="table-fixed">
                   <thead>
                     <tr className="bg-base-dark-color text-white text-left">
-                      <th className="px-4 py-2 w-[20%] ">Invoice To</th>
-                      <th className="px-4 py-2 w-[35%]"></th>
-                      <th className="px-4 py-2 w-[25%]">Payment Details</th>
-                      <th className="px-4 py-2 w-[20%]"></th>
+                      <th className="px-4 py-1 w-[20%] ">Invoice To</th>
+                      <th className="px-4 py-1 w-[35%]"></th>
+                      <th className="px-4 py-1 w-[25%]">Payment Details</th>
+                      <th className="px-4 py-1 w-[20%]"></th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr className="">
-                      <td className="border  px-4 py-2  font-medium">Name</td>
-                      <td className="border  px-4 py-2  font-medium">
+                      <td className="border  px-4 py-0  font-medium">Name</td>
+                      <td className="border  px-4 py-0  font-medium">
                         {invoice?.cus_name}
                       </td>
-                      <td className="border  px-4 py-2  font-medium">
+                      <td className="border  px-4 py-0  font-medium">
                         Payment Type
                       </td>
-                      <td className="border  px-4 py-2  font-medium">
+                      <td className="border  px-4 py-0  font-medium">
                         {invoice?.payment_type}
                       </td>
                     </tr>
                     <tr className="">
-                      <td className="border  px-4 py-2  font-medium">
+                      <td className="border  px-4 py-0  font-medium">
                         Project Name
                       </td>
-                      <td className="border  px-4 py-2  font-medium">
+                      <td className="border  px-4 py-0  font-medium">
                         {invoice?.project_name}
                       </td>
-                      <td className="border  px-4 py-2  font-medium">
+                      <td className="border  px-4 py-0  font-medium">
                         Bank Details
                       </td>
-                      <td className="border  px-4 py-2  font-medium">
+                      <td className="border  px-4 py-0  font-medium">
                         {invoice?.bank_details}
                       </td>
                     </tr>
                     <tr className="">
-                      <td className="border  px-4 py-2  font-medium">
+                      <td className="border  px-4 py-0  font-medium">
                         Project Id
                       </td>
-                      <td className="border  px-4 py-2  font-medium">
+                      <td className="border  px-4 py-0  font-medium">
                         {invoice?.project}
                       </td>
-                      <td className="border  px-4 py-2  font-medium">
+                      <td className="border  px-4 py-0  font-medium">
                         Account/Cheque Number
                       </td>
-                      <td className="border  px-4 py-2  font-medium">
+                      <td className="border  px-4 py-0  font-medium">
                         {invoice?.check_number}
                       </td>
                     </tr>
                     <tr className="">
-                      <td className="border  px-4 py-2  font-medium">
+                      <td className="border  px-4 py-0  font-medium">
                         Payment Phase
                       </td>
-                      <td className="border  px-4 py-2  font-medium">
+                      <td className="border  px-4 py-0  font-medium">
                         {invoice?.payment_phase}
                       </td>
-                      <td className="border  px-4 py-2  font-medium">
+                      <td className="border  px-4 py-0  font-medium">
                         Routing/Swif No
                       </td>
-                      <td className="border  px-4 py-2  font-medium">
+                      <td className="border  px-4 py-0  font-medium">
                         {invoice?.routing_number}
                       </td>
                     </tr>
                     <tr className="">
-                      <td className="border  px-4 py-2  font-medium">
+                      <td className="border  px-4 py-0  font-medium">
                         Address
                       </td>
-                      <td className="border  px-4 py-2  font-medium">
+                      <td className="border  px-4 py-0  font-medium">
                         {invoice?.cus_name}
                       </td>
-                      <td className="border  px-4 py-2  font-medium"></td>
-                      <td className="border  px-4 py-2  font-medium"></td>
+                      <td className="border  px-4 py-0  font-medium"></td>
+                      <td className="border  px-4 py-0  font-medium"></td>
                     </tr>
                   </tbody>
                 </table>
               </div>
             </div>
-            <div className="form-item-section min-h-[200px] my-4 mx-2">
+            <div className="form-item-section min-h-[150px] my-4 mx-2">
               <div className="overflow-x-auto">
                 <table className="table w-full">
-                  <thead>
+                  <thead className="text-white">
                     <tr className="">
                       <th className="bg-base-dark-color w-3/6">
                         Description of the Services
@@ -242,10 +265,10 @@ const BillingList = () => {
                     {invoice?.invoices?.map((e, i) => {
                       return (
                         <tr>
-                          <td>{e?.description}</td>
-                          <td>{e?.price}</td>
-                          <td>{e?.additional_expense}</td>
-                          <td>{e?.total}</td>
+                          <td className="py-0">{e?.description}</td>
+                          <td className="py-0">{e?.price}</td>
+                          <td className="py-0">{e?.additional_expense}</td>
+                          <td className="py-0">{e?.total}</td>
                         </tr>
                       );
                     })}
@@ -257,13 +280,13 @@ const BillingList = () => {
           <div className="flex ">
             <div className="w-full">
               <div className="overflow-x-auto">
-                <table className="table w-full">
+                <table className="table w-full ">
                   <thead>
-                    <tr>
-                      <th className="text-center bg-base-dark-color w-1/2">
+                    <tr className="text-white">
+                      <th className="text-center bg-base-dark-color w-1/2 py-0">
                         Notes
                       </th>
-                      <th className="bg-gray-700 w-1/2"></th>
+                      <th className="bg-gray-700 w-1/2 py-3 "></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -281,7 +304,7 @@ const BillingList = () => {
                           </tr>
                           <tr>
                             <th className="p-0 m-0">Grand Total</th>
-                            <td className="p-0 m-0">{invoice.total_amount}</td>
+                            <td className="p-0 m-0">{invoice?.total_amount}</td>
                           </tr>
                         </table>
                       </td>
@@ -292,7 +315,7 @@ const BillingList = () => {
               <div>
                 <p>
                   <strong>In Words: </strong>
-                  {inWords(invoice?.total_amount)}
+                  {inWords(invoice ? invoice.total_amount : "0")}
                 </p>
               </div>
             </div>
@@ -326,8 +349,16 @@ const BillingList = () => {
             </div>
           </div>
 
-          <div className="flex justify-center my-4">
-            <button className="btn btn-warning" onClick={() => window.print()}>
+          <div className="flex justify-center my-4 " id="remove-area">
+            <button
+              className="btn btn-warning"
+              onClick={() => {
+                let area = document.getElementById("remove-area");
+                area.classList.remove("flex");
+                area.classList.add("hidden");
+                window.print();
+              }}
+            >
               Print
             </button>
           </div>
