@@ -1,5 +1,3 @@
-import { faFile } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import logo from "../../resources/logo.png";
@@ -18,7 +16,7 @@ const BillingList = () => {
       .then((res) => {
         console.log(res.data);
         setData(res.data);
-        if (isSet) {
+        if (isSet === false) {
           setInvId(res.data.id);
           setIsSet(true);
         }
@@ -32,6 +30,12 @@ const BillingList = () => {
     getData();
   }, []);
 
+  // const getInvoiceData = (inv) => {
+  //   myAxios.get(`bill/invoices/${inv}/`).then((res) => {
+  //     // console.log(res);
+  //     setInvoice(res.data);
+  //   });
+  // };
   useEffect(() => {
     myAxios.get(`bill/invoices/${invId}/`).then((res) => {
       // console.log(res);
@@ -74,24 +78,20 @@ const BillingList = () => {
                         <td>{item.cus_name}</td>
                         <td>{item.project_name}</td>
                         <td>{item.payment_type}</td>
-                        <td className="text-center">
-                          {/* <link> */}
-                          {/* <Link to={"/peram/" + item.id}> */}
-                          {/* <FontAwesomeIcon icon={faFile} /> */}
+                        <td data-id={item.id}>
                           <label
                             htmlFor="my-modal-3"
                             className="btn"
-                            id={item.id}
+                            id="invoiceId"
                             onClick={(e) => {
-                              // console.log(e.target.id);
-                              setInvId(e.target.id);
+                              setInvId(
+                                e.target.parentElement.getAttribute("data-id")
+                              );
                             }}
                           >
-                            <FontAwesomeIcon icon={faFile} />
+                            {/* <FontAwesomeIcon icon={faFile} /> */}
+                            details
                           </label>
-                          {/* </Link> */}
-
-                          {/* </link> */}
                         </td>
                       </tr>
                     );
