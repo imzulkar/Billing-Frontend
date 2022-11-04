@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Signin from "./components/authentication/login";
 import BillingList from "./components/billing/billingList";
 import Dashboard from "./components/billing/dashboard";
+import Invoice from "./components/billing/invoice";
 import Profile from "./components/profile";
 function App() {
   const token = localStorage.getItem("accessToken");
@@ -25,6 +26,7 @@ function App() {
           <Route exact path="/login" element={<Signin />} />
           <Route exact path="/profile" element={<Profile />} />
           <Route exact path="/test" element={<BillingList />} />
+          <Route exact path="/peram/:invId" element={<Invoice />} />
         </Routes>
       </BrowserRouter>
     </div>

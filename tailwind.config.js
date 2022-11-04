@@ -6,7 +6,15 @@ module.exports = {
     "./src/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        "base-color-light": "#78d8f5",
+        "base-color": "#35c3ef",
+        "base-dark-color": "hsl(202, 97%, 38%);",
+        "secondary-color": "#a4edaf",
+        "secondary-dark-color": "#71ee83",
+      },
+    },
   },
   plugins: [require("daisyui")],
   daisyui: {

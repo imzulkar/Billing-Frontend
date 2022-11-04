@@ -88,6 +88,7 @@ const BillingForm = () => {
       inv_date: invDate,
       cus_address: customerAddress,
       payment_type: paymentType,
+      payment_phase: paymentPhase,
       account_name: accountName,
       account_number: accountNo,
       check_number: chequeNo,
