@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import myAxios from "../utils/myAxios";
 
 const BillingForm = () => {
@@ -7,6 +8,7 @@ const BillingForm = () => {
   const [customerName, setCustomerName] = useState("");
   const [customerAddress, setCustomerAddress] = useState("");
   const [customer, setCustomer] = useState("");
+  const [project, setProject] = useState("");
   const [projectName, setProjectName] = useState("");
   const [paymentPhase, setPaymentPhase] = useState("");
   const [paymentType, setPaymentType] = useState("");
@@ -20,20 +22,27 @@ const BillingForm = () => {
   const [additionalExpense, setAdditionalExpense] = useState("");
   const [totalExpense, setTotalExpense] = useState("");
 
+  const [projectOption, setProjectOption] = useState();
+
   const [invDate, setInvDate] = useState();
   const navigate = useNavigate();
+  const addZero = (val) => {
+    // var val = 0;
+    if (val < 10) {
+      // console.log(typeof val);
+      return 0 + "" + val;
+    }
+    return val;
+  };
   const getDate = () => {
     var today = new Date();
     let year = today.getFullYear();
     let month = today.getMonth();
     let day = today.getDate();
-    let date = `${year}-${month + 1}-${day}`;
-    return date;
-  };
+    let date = `${year}-${addZero(month + 1)}-${addZero(day)}`;
+    // console.log(date);
 
-  const HandelBill = (event) => {
-    event.preventDefault();
-    alert(JSON.stringify(this.state.formValues));
+    return date;
   };
 
   const [formValues, setFormValues] = useState([
@@ -44,7 +53,7 @@ const BillingForm = () => {
     let newFormValues = [...formValues];
     newFormValues[i][e.target.name] = e.target.value;
     setFormValues(newFormValues);
-    console.log(formValues);
+    // console.log(formValues);
   };
 
   let addFormFields = () => {
@@ -60,6 +69,17 @@ const BillingForm = () => {
     setFormValues(newFormValues);
   };
 
+  const Projects = (i, e) => {
+    myAxios.get("bill/projects/").then((res) => {
+      // console.log(res.data);
+      setProjectOption(res.data);
+    });
+  };
+
+  useEffect(() => {
+    Projects();
+  }, []);
+
   const onSubmit = (event) => {
     event.preventDefault();
     const payload = {
@@ -73,7 +93,8 @@ const BillingForm = () => {
       check_number: chequeNo,
       bank_details: bankDetails,
       routing_number: routeingNo,
-      project: "c588adb9-6e76-4aab-ac14-2b3c071b647d",
+      project: project,
+      project_name: projectName,
     };
     console.log(payload);
     // console.log(payload);
@@ -84,10 +105,20 @@ const BillingForm = () => {
         },
       })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
+        Swal.fire(
+          "success",
+          "You have genereted Invoice successfully",
+          "success"
+        );
         navigate("/dashboard");
       })
       .catch((err) => {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: err.response.data,
+        });
         console.log(err.response.data);
       });
   };
@@ -128,6 +159,7 @@ const BillingForm = () => {
                           }
                         }}
                         onChange={(e) => {
+                          console.log(e.target.value);
                           setInvDate(e.target.value);
                         }}
                         className="input input-bordered"
@@ -179,6 +211,36 @@ const BillingForm = () => {
                           width: "75%",
                         }}
                       ></textarea>
+                    </label>
+                  </div>
+
+                  <div className="form-control  mb-2">
+                    {/* Account Number */}
+                    <label className="input-group">
+                      <span
+                        style={{
+                          width: "25%",
+                          textAlign: "center",
+                        }}
+                      >
+                        Project
+                      </span>
+                      <select
+                        className="select select-bordered"
+                        onChange={(e) => {
+                          setProject(e.target.value);
+                        }}
+                        style={{
+                          width: "75%",
+                        }}
+                      >
+                        <option disabled selected>
+                          Select Project
+                        </option>
+                        {projectOption?.map((e, key) => {
+                          return <option value={e.id}>{e.project_name}</option>;
+                        })}
+                      </select>
                     </label>
                   </div>
 
@@ -460,26 +522,22 @@ const BillingForm = () => {
                   </div>
                 </div>
               ))}
-              <div className="button-section">
-                <button
-                  class="btn btn-outline btn-primary"
-                  type="button"
-                  onClick={() => addFormFields()}
-                >
-                  Add New
-                </button>
-                {/* <button
-          className="btn btn-primary"
-          type="button"
-          onClick={() => addFormFields()}
-        >
-          Add New
-        </button> */}
+              <div className="button-section flex justify-end mr-[8%]">
+                <div>
+                  <button
+                    class="btn btn-outline btn-primary"
+                    type="button"
+                    onClick={() => addFormFields()}
+                  >
+                    Add New
+                  </button>
+                </div>
               </div>
-            </div>
-
-            <div>
-              <button className="btn btn-primary">Submit</button>
+              <div className="flex justify-center">
+                <button className="btn btn-primary px-8" id="invoice_btn">
+                  Generate Invoice
+                </button>
+              </div>
             </div>
           </form>
         </div>
