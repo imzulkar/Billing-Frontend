@@ -28,10 +28,10 @@ const SideNav = () => {
                 <label for="my-drawer-2" className="drawer-overlay"></label>
                 <ul className="menu p-4 overflow-y-auto w-80 bg-gray-600 text-gray-200 ">
                   <li>
-                    <Link to="">View Invoices</Link>
+                    <Link to="/invoices">View Invoices</Link>
                   </li>
                   <li>
-                    <Link to="">Billing Form</Link>
+                    <Link to="/dashboard">Billing Form</Link>
                   </li>
                   <li>
                     <Link to="">Requisition Form</Link>

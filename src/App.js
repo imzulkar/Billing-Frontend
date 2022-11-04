@@ -25,7 +25,7 @@ function App() {
           <Route exact path="/dashboard" element={<Dashboard />} />
           <Route exact path="/login" element={<Signin />} />
           <Route exact path="/profile" element={<Profile />} />
-          <Route exact path="/test" element={<BillingList />} />
+          <Route exact path="/invoices" element={<BillingList />} />
           <Route exact path="/peram/:invId" element={<Invoice />} />
         </Routes>
       </BrowserRouter>
