@@ -2,7 +2,7 @@ import axios from "axios";
 import { getAccessToken } from "./localstorage";
 
 const myAxios = axios.create({
-  baseURL: "http://127.0.0.1:8000/",
+  baseURL: "http://prc-bd.com/",
 });
 
 // Add a request interceptor

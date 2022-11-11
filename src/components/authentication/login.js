@@ -1,35 +1,36 @@
-import React, { useState } from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Swal from 'sweetalert2'
+import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
+import { makeStyles } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import React, { useState } from "react";
+import Swal from "sweetalert2";
+import { setTokens } from "../utils/localstorage";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: '100vh',
+    height: "100vh",
   },
   image: {
     // backgroundImage: 'url(https://source.unsplash.com/random)',
-    backgroundSize: 'cover',
+    backgroundSize: "cover",
   },
   paper: {
     margin: theme.spacing(8, 4),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: '100%',
+    width: "100%",
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -38,56 +39,56 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 async function loginUser(credentials) {
-  return fetch('http://127.0.0.1:8000/user/token/', {
-    method: 'POST',
+  return fetch("http://prc-bd.com/user/token/", {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json'
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify(credentials)
-  })
-    .then(data => data.json())
- }
+    body: JSON.stringify(credentials),
+  }).then((data) => data.json());
+}
 
 export default function Signin() {
   const classes = useStyles();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await loginUser({
       email,
-      password
+      password,
     });
-    if ('access' in response) {
-        console.log(response['access']);
-        Swal.fire({
-            title: 'Success',
-            showClass: {
-              popup: 'animate__animated animate__fadeInDown'
-            },
-            hideClass: {
-              popup: 'animate__animated animate__fadeOutUp'
-            }
-          })
-    //     Swal("Success", response.message, "success", {
-    //     buttons: false,
-    //     timer: 2000,
-    //   })
-      .then((value) => {
-        console.log(value);
-        localStorage.setItem('accessToken', response['access']);
-        // localStorage.setItem('user', JSON.stringify(response['user']));
-        window.location.href = "/profile";
-      });
+    if ("access" in response) {
+      console.log(response["access"]);
+      Swal.fire({
+        title: "Success",
+        showClass: {
+          popup: "animate__animated animate__fadeInDown",
+        },
+        hideClass: {
+          popup: "animate__animated animate__fadeOutUp",
+        },
+      })
+        //     Swal("Success", response.message, "success", {
+        //     buttons: false,
+        //     timer: 2000,
+        //   })
+        .then((value) => {
+          setTokens(response["access"], response["refresh"]);
+          // console.log(value);
+          // localStorage.setItem("accessToken", response["access"]);
+          // localStorage.setItem('user', JSON.stringify(response['user']));
+          window.location.href = "/dashboard";
+        });
     } else {
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Invalid email or Password',
-          })
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Invalid email or Password",
+      });
     }
-  }
+  };
 
   return (
     <Grid container className={classes.root}>
@@ -110,7 +111,7 @@ export default function Signin() {
               id="email"
               name="email"
               label="Email Address"
-              onChange={e => setEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <TextField
               variant="outlined"
@@ -121,7 +122,7 @@ export default function Signin() {
               name="password"
               label="Password"
               type="password"
-              onChange={e => setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
             />
             <Button
               type="submit"

@@ -34,17 +34,17 @@ const SideNav = () => {
                     <Link to="/dashboard">Billing Form</Link>
                   </li>
                   <li>
-                    <Link to="">Requisition Form</Link>
+                    <Link to="/projects">Projects</Link>
                   </li>
                   <li>
-                    <Link to="">Cash Request Form</Link>
+                    <Link to="/add-project">Add Project</Link>
                   </li>
-                  <li>
+                  {/* <li>
                     <Link to="">Debit Voucher</Link>
                   </li>
                   <li>
                     <Link to="">Credit Voucher</Link>
-                  </li>
+                  </li> */}
                 </ul>
               </div>
             </div>
