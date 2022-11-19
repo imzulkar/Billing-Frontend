@@ -31,7 +31,7 @@ const SideNav = () => {
                     <Link to="/invoices">View Invoices</Link>
                   </li>
                   <li>
-                    <Link to="/dashboard">Billing Form</Link>
+                    <Link to="/dashboard">Invoice Form</Link>
                   </li>
                   <li>
                     <Link to="/projects">Projects</Link>

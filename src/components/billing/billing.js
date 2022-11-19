@@ -129,7 +129,7 @@ const BillingForm = () => {
       <div className="m-3">
         <div className="billing-form-header w-max m-6 mx-auto">
           <h3 className="text-4xl font-bold capitalize underline">
-            Billing Form
+            Invoicing Form
           </h3>
         </div>
 
